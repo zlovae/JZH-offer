@@ -1,0 +1,53 @@
+一个整型数组里除了两个数字之外，其他的数字都出现了偶数次。请写程序找出这两个只出现一次的数字。
+
+//num1,num2分别为长度为1的数组。传出参数
+//将num1[0],num2[0]设置为返回结果
+public class Solution {
+    public void FindNumsAppearOnce(int [] array,int num1[] , int num2[]) {
+        int len=array.length;
+        int [] copy=new int [len];
+        for(int i=0; i<len; i++) {
+            copy[i]=array[i];
+        }
+        for(int i=1; i<len; i++) {
+            copy[0]^=copy[i];
+        }
+        int [] copy1=new int [len];
+        int [] copy2=new int [len];
+        int len1=0, len2=0;
+        int index=FindFirst1(copy[0]);
+        for(int i=0; i<len; i++) {
+            if(IsBit1(array[i], index)) {
+                copy1[len1++]=array[i];
+            } else {
+                copy2[len2++]=array[i];
+            }
+        }
+        for(int i=1; i<len1; i++) {
+            copy1[0]^=copy1[i];
+        }
+        num1[0]=copy1[0];
+        for(int i=1; i<len2; i++) {
+            copy2[0]^=copy2[i];
+        }
+        num2[0]=copy2[0];
+    }
+    public int FindFirst1(int num) {
+        int index=0;
+        while((num&1)==0) {
+            index++;
+            num=num>>1;
+        }
+        return index;
+    }
+    public boolean IsBit1(int num, int index) {
+        boolean f=false;
+        while(index>0) {
+            num=num>>1;
+            index--;
+        }
+        if((num&1)==1)
+            f=true;
+        return f;
+    }
+}
