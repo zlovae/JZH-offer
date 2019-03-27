@@ -1,0 +1,23 @@
+给定一个数组A[0,1,...,n-1],请构建一个数组B[0,1,...,n-1],其中B中的元素B[i]=A[0]*A[1]*...*A[i-1]*A[i+1]*...*A[n-1]。不能使用除法。
+
+import java.util.ArrayList;
+public class Solution {
+    public int[] multiply(int[] A) {
+        int len=A.length;
+        int [] b1=new int[len];
+        int [] b2=new int[len];
+        b1[0]=1;
+        b1[1]=A[0];
+        b2[len-1]=1;
+        b2[len-2]=A[len-1];
+        for(int i=2; i<len; i++) {
+            b1[i]=b1[i-1]*A[i-1];
+            b2[len-i-1]=b2[len-i]*A[len-i];
+        }
+        int []B=new int[len];
+        for(int i=0; i<len; i++) {
+            B[i]=b1[i]*b2[i];
+        }
+        return B;
+    }
+}
